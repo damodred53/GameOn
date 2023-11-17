@@ -7,6 +7,29 @@ function editNav() {
   }
 }
 
+/* Gestion des liens actifs dans la barre de navigation */
+
+const manageNavBar = () => {
+  const eventNavBar = document.querySelectorAll('.navBar_link');
+  const arrayNavBar = Array.from(eventNavBar);
+
+  const eachNavBarElement = arrayNavBar.forEach((elem) => {
+    elem.addEventListener('click', () => {
+      eventNavBar.forEach((elem) => {
+        elem.classList.remove('active');
+      })
+      elem.classList.add('active');
+    })
+  })
+}
+
+manageNavBar();
+
+
+
+
+
+
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
