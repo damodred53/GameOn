@@ -43,4 +43,17 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
+/* Fermeture de la modale */
+
+
+const crossClosure = document.querySelector('.close');
+
+const modalClosure = () => {
+  modalbg.style.display = "none";
+
+}
+
+crossClosure.addEventListener('click', modalClosure)
+
+
 
