@@ -35,12 +35,15 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 
+
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // launch modal form
 function launchModal() {
+  
   modalbg.style.display = "block";
+  document.querySelector('form').style.display = "block";
 }
 
 /* Fermeture de la modale */
@@ -49,21 +52,25 @@ function launchModal() {
 const crossClosure = document.querySelector('.close');
 
 const modalClosure = () => {
+  
+  /*document.querySelector('.newDivElement').style.display = "none";*/
   modalbg.style.display = "none";
 
 }
 
-crossClosure.addEventListener('click', modalClosure);
+crossClosure.addEventListener('click', () => {
+  document.querySelector('.newDivElement').style.display = "none";
+      isValid = false;
+      console.log(isValid);
+      modalClosure();
+});
 
-/* fonction pour valider l'email via une expression régulière (regex) */
+/* Fermeture de la modale quand on clique hors du formulaire */
 
-/*const validateEmail = (mail) => {
-  const emailReg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i)
-  const isEmailValid =  emailReg.test(mail)
-  console.log(isEmailValid);
-  return  isEmailValid;
 
-}*/
+
+
+
 
 
 const validate = () => {
@@ -78,7 +85,7 @@ const validate = () => {
   } else {
     validateFirstName = true;
     document.querySelector('.firstname_error').style.display = "none";
-    console.log(validateFirstName);
+
   }
 
   /* Vérification si le nom de famille contient au moins deux caractères */
@@ -91,7 +98,7 @@ const validate = () => {
   } else {
     validateFamilyName = true;
     document.querySelector('.familyname_error').style.display = "none";
-    console.log(validateFamilyName);
+
   }
 
   /* Vérification de la validité de l'adresse email */
@@ -101,13 +108,23 @@ const validate = () => {
 
   const emailReg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i)
   const isEmailValid =  emailReg.test(emailToValidate)
+
   if (!isEmailValid) {
   document.querySelector('.email_error').style.display = "block";
 
  }  else {
   document.querySelector('.email_error').style.display = "none";
  }
- /* isEmailValid sera true */
+ 
+ /*Vérification si l'utilisateur a indiqué une date */
+ let dateValidation = false;
+ const isDateValid = document.querySelector('#birthdate');
+ if (isDateValid.value === "") {
+  document.querySelector('.date_error').style.display = "block";
+ } else {
+  dateValidation = true;
+  document.querySelector('.date_error').style.display = "none";
+ }
   
 
  /* Vérification si le champ du nombre de tournoi est bien un number */ 
@@ -142,23 +159,23 @@ const validate = () => {
 
   if (!testChecked.checked) {
     document.querySelector('.conditions_error').style.display = "block";
-    console.log(isAcceptationInputChecked)
+
   } else {
     isAcceptationInputChecked = true;
     document.querySelector('.conditions_error').style.display = "none";
-    console.log(isAcceptationInputChecked)
+
   }
 
   /* Vérification acceptation de la newletter */
   
-  const test2 = document.querySelector("#checkbox2")
+  /*const test2 = document.querySelector("#checkbox2")
 
   if (test2.checked === false) {
 
-  } 
+  } */
 
 
-  if (validateFirstName && validateFamilyName && isQuantityValidate && isAcceptationInputChecked   && isOneInputChecked ) {
+  if (validateFirstName && validateFamilyName && isEmailValid && dateValidation && isQuantityValidate && isAcceptationInputChecked   && isOneInputChecked ) {
     console.log("le formulaire est valide")
     return true
     
@@ -182,10 +199,45 @@ const validate = () => {
 const form = document.querySelector('form');
 form.addEventListener('submit', (event) => {
   event.preventDefault();
-  console.log("Il n’y a pas eu de rechargement de page");
 
-
+  let isValid = validate();
   validate();
+  if (isValid) {
+    console.log(isValid);
+    document.querySelector('form').style.display = "none";
 
+    /* Si ce n'est pas la première fois que que nous ouvrons cette modale */
+    if (document.querySelector('.newDivElement')) {
+      document.querySelector('.newDivElement').style.display = "flex";
+    } else {
+
+      /* création du remerciement post-validation */
+
+    const myDiv = document.createElement('div');
+    myDiv.classList.add('newDivElement')
+    document.querySelector('.modal-body').appendChild(myDiv);
+
+    const myParagraph = document.createElement('p');
+    myParagraph.innerHTML = "Merci pour votre inscription";
+    myParagraph.classList.add('newElementParagraph');
+    document.querySelector('.newDivElement').appendChild(myParagraph);
+
+    const myInput = document.createElement('input');
+    myInput.value = "Fermer";
+    myInput.classList.add('btn-submit');
+    myInput.classList.add('btn_submit_validation');
+    document.querySelector('.newDivElement').appendChild(myInput);
+    myInput.addEventListener('click', () => {
+      document.querySelector('.newDivElement').style.display = "none";
+      isValid = false;
+      console.log(isValid);
+      modalClosure();
+    });
+
+
+    }
+
+    
+  }
 
 })
