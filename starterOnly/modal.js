@@ -34,7 +34,8 @@ manageNavBar();
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-
+const footer = document.querySelector('footer');
+const hero_section = document.querySelector('.hero-section');
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -43,8 +44,9 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 function launchModal() {
   
   modalbg.style.display = "block";
-  document.querySelector('form').style.display = "block";
-}
+  footer.classList.add("hidden_part");
+  hero_section.classList.add("hidden_part");
+};
 
 /* Fermeture de la modale */
 
@@ -53,15 +55,20 @@ const crossClosure = document.querySelector('.close');
 
 const modalClosure = () => {
   
-  /*document.querySelector('.newDivElement').style.display = "none";*/
-  modalbg.style.display = "none";
-
+  footer.classList.remove("hidden_part");
+  hero_section.classList.remove("hidden_part");
+  document.querySelector('.bground').style.display = "none";
 }
 
 crossClosure.addEventListener('click', () => {
-  document.querySelector('.newDivElement').style.display = "none";
-      isValid = false;
-      console.log(isValid);
+
+  document.querySelector('form').style.display = "block";
+
+  if (document.querySelector('.newDivElement')) {
+    document.querySelector('.newDivElement').style.display = "none";
+  } 
+  
+
       modalClosure();
 });
 
@@ -166,15 +173,6 @@ const validate = () => {
 
   }
 
-  /* Vérification acceptation de la newletter */
-  
-  /*const test2 = document.querySelector("#checkbox2")
-
-  if (test2.checked === false) {
-
-  } */
-
-
   if (validateFirstName && validateFamilyName && isEmailValid && dateValidation && isQuantityValidate && isAcceptationInputChecked   && isOneInputChecked ) {
     console.log("le formulaire est valide")
     return true
@@ -203,7 +201,8 @@ form.addEventListener('submit', (event) => {
   let isValid = validate();
   validate();
   if (isValid) {
-    console.log(isValid);
+    document.querySelector('form').reset();
+    isValid = false;
     document.querySelector('form').style.display = "none";
 
     /* Si ce n'est pas la première fois que que nous ouvrons cette modale */
@@ -227,17 +226,13 @@ form.addEventListener('submit', (event) => {
     myInput.classList.add('btn-submit');
     myInput.classList.add('btn_submit_validation');
     document.querySelector('.newDivElement').appendChild(myInput);
+
     myInput.addEventListener('click', () => {
+      !isValid
       document.querySelector('.newDivElement').style.display = "none";
-      isValid = false;
-      console.log(isValid);
+      document.querySelector('form').style.display = "block";
       modalClosure();
     });
-
-
     }
-
-    
   }
-
 })
