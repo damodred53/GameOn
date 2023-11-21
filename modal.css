@@ -532,7 +532,9 @@ footer {
 
 @media screen and (max-width:540px) {
 
-
+body {
+  height: 900px;
+}
   
 .hidden_part {
   display: none;

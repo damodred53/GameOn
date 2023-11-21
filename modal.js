@@ -1,3 +1,6 @@
+
+/* Gestion du responsive des différents éléments de la page d'accueil */
+
 function editNav() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -11,9 +14,8 @@ function editNav() {
 
 const manageNavBar = () => {
   const eventNavBar = document.querySelectorAll('.navBar_link');
-  const arrayNavBar = Array.from(eventNavBar);
 
-  const eachNavBarElement = arrayNavBar.forEach((elem) => {
+  const eachNavBarElement = eventNavBar.forEach((elem) => {
     elem.addEventListener('click', () => {
       eventNavBar.forEach((elem) => {
         elem.classList.remove('active');
@@ -50,9 +52,6 @@ function launchModal() {
 
 /* Fermeture de la modale */
 
-
-const crossClosure = document.querySelector('.close');
-
 const modalClosure = () => {
   
   footer.classList.remove("hidden_part");
@@ -60,25 +59,16 @@ const modalClosure = () => {
   document.querySelector('.bground').style.display = "none";
 }
 
-crossClosure.addEventListener('click', () => {
+const crossClosure = document.querySelector('.close');
 
+crossClosure.addEventListener('click', () => {
   document.querySelector('form').style.display = "block";
 
   if (document.querySelector('.newDivElement')) {
     document.querySelector('.newDivElement').style.display = "none";
   } 
-  
-
       modalClosure();
 });
-
-/* Fermeture de la modale quand on clique hors du formulaire */
-
-
-
-
-
-
 
 const validate = () => {
 
@@ -88,37 +78,28 @@ const validate = () => {
   const controle_firstName = document.querySelector('#first');
   if (controle_firstName.value.length < 2) {
     document.querySelector('.firstname_error').style.display = "block";
-
   } else {
     validateFirstName = true;
     document.querySelector('.firstname_error').style.display = "none";
-
   }
 
   /* Vérification si le nom de famille contient au moins deux caractères */
   let validateFamilyName = false;
   const controle_lastName = document.querySelector('#last');
   if (controle_lastName.value.length < 2) {
-
     document.querySelector('.familyname_error').style.display = "block";
-
   } else {
     validateFamilyName = true;
     document.querySelector('.familyname_error').style.display = "none";
-
   }
 
   /* Vérification de la validité de l'adresse email */
-
   const email = document.querySelector('#email');
   const emailToValidate = email.value;
-
   const emailReg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i)
   const isEmailValid =  emailReg.test(emailToValidate)
-
   if (!isEmailValid) {
   document.querySelector('.email_error').style.display = "block";
-
  }  else {
   document.querySelector('.email_error').style.display = "none";
  }
@@ -136,9 +117,7 @@ const validate = () => {
 
  /* Vérification si le champ du nombre de tournoi est bien un number */ 
   let isQuantityValidate = false;
-
   const numberTournament = document.querySelector('#quantity');
-
   if (numberTournament.value === "") {
     document.querySelector('.quantity_error').style.display = "block";
   } else {
@@ -166,38 +145,25 @@ const validate = () => {
 
   if (!testChecked.checked) {
     document.querySelector('.conditions_error').style.display = "block";
-
   } else {
     isAcceptationInputChecked = true;
     document.querySelector('.conditions_error').style.display = "none";
-
   }
 
   if (validateFirstName && validateFamilyName && isEmailValid && dateValidation && isQuantityValidate && isAcceptationInputChecked   && isOneInputChecked ) {
     console.log("le formulaire est valide")
     return true
-    
   } else {
     console.log("le formulaire est invalide")
     return false
-    
   }
-
-  
-
 }
 
-
-
-
-/* Intégration de la fonction de validation */
-
-
+/* Intégration du formulaire */
 
 const form = document.querySelector('form');
 form.addEventListener('submit', (event) => {
   event.preventDefault();
-
   let isValid = validate();
   validate();
   if (isValid) {
@@ -210,7 +176,7 @@ form.addEventListener('submit', (event) => {
       document.querySelector('.newDivElement').style.display = "flex";
     } else {
 
-      /* création du remerciement post-validation */
+    /* création du remerciement post-validation */
 
     const myDiv = document.createElement('div');
     myDiv.classList.add('newDivElement')
