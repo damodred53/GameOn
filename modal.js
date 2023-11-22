@@ -62,6 +62,17 @@ const modalClosure = () => {
 const crossClosure = document.querySelector('.close');
 
 crossClosure.addEventListener('click', () => {
+  
+  const textControl = document.querySelectorAll('.text-control');
+  textControl.forEach((e) => {
+    e.classList.remove('text_control_error')
+  })
+
+  const paragraphControl = document.querySelectorAll('.error');
+  paragraphControl.forEach((e) => {
+    e.style.display = "none";
+  })
+
   document.querySelector('form').style.display = "block";
 
   if (document.querySelector('.newDivElement')) {
@@ -78,9 +89,11 @@ const validate = () => {
   const controle_firstName = document.querySelector('#first');
   if (controle_firstName.value.length < 2) {
     document.querySelector('.firstname_error').style.display = "block";
+    document.querySelector('#first').classList.add("text_control_error");
   } else {
     validateFirstName = true;
     document.querySelector('.firstname_error').style.display = "none";
+    document.querySelector('#first').classList.remove("text_control_error");
   }
 
   /* Vérification si le nom de famille contient au moins deux caractères */
@@ -88,9 +101,11 @@ const validate = () => {
   const controle_lastName = document.querySelector('#last');
   if (controle_lastName.value.length < 2) {
     document.querySelector('.familyname_error').style.display = "block";
+    document.querySelector('#last').classList.add("text_control_error");
   } else {
     validateFamilyName = true;
     document.querySelector('.familyname_error').style.display = "none";
+    document.querySelector('#last').classList.remove("text_control_error");
   }
 
   /* Vérification de la validité de l'adresse email */
@@ -100,8 +115,10 @@ const validate = () => {
   const isEmailValid =  emailReg.test(emailToValidate)
   if (!isEmailValid) {
   document.querySelector('.email_error').style.display = "block";
+  document.querySelector('#email').classList.add("text_control_error");
  }  else {
   document.querySelector('.email_error').style.display = "none";
+  document.querySelector('#email').classList.remove("text_control_error");
  }
  
  /*Vérification si l'utilisateur a indiqué une date */
@@ -109,9 +126,11 @@ const validate = () => {
  const isDateValid = document.querySelector('#birthdate');
  if (isDateValid.value === "") {
   document.querySelector('.date_error').style.display = "block";
+  document.querySelector('#birthdate').classList.add("text_control_error");
  } else {
   dateValidation = true;
   document.querySelector('.date_error').style.display = "none";
+  document.querySelector('#birthdate').classList.remove("text_control_error");
  }
   
 
@@ -120,9 +139,11 @@ const validate = () => {
   const numberTournament = document.querySelector('#quantity');
   if (numberTournament.value === "") {
     document.querySelector('.quantity_error').style.display = "block";
+    document.querySelector('#quantity').classList.add("text_control_error");
   } else {
     isQuantityValidate = true;
     document.querySelector('.quantity_error').style.display = "none";
+    document.querySelector('#quantity').classList.remove("text_control_error");
   }
 
   /* Vérification si l'un des input radio a bien été coché */
